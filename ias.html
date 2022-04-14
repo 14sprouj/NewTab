@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="time">
+		<div id="iasClock">
+		</div>
+	</div>
+	<script>
+		var iasClock = document.getElementById("iasClock");
+		var iasHourOuterBar = document.createElement("div");
+		iasHourOuterBar.setAttribute("id", "iasHourOuterBar");
+		iasClock.appendChild(iasHourOuterBar);
+		var iasHourInnerBar = document.createElement("div");
+		iasHourInnerBar.setAttribute("id", "iasHourInnerBar");
+		iasHourOuterBar.appendChild(iasHourInnerBar);
+		var iasMinuteOuterBar = document.createElement("div");
+		iasMinuteOuterBar.setAttribute("id", "iasMinuteOuterBar");
+		iasClock.appendChild(iasMinuteOuterBar);
+		var iasMinuteInnerBar = document.createElement("div");
+		iasMinuteInnerBar.setAttribute("id", "iasMinuteInnerBar");
+		iasMinuteOuterBar.appendChild(iasMinuteInnerBar);
+		var iasSecondOuterBar = document.createElement("div");
+		iasSecondOuterBar.setAttribute("id", "iasSecondOuterBar");
+		iasClock.appendChild(iasSecondOuterBar);
+		var iasSecondInnerBar = document.createElement("div");
+		iasSecondInnerBar.setAttribute("id", "iasSecondInnerBar");
+		iasSecondOuterBar.appendChild(iasSecondInnerBar);
+
+		function getTime() {
+			var date = new Date();
+			var h = date.getHours();
+			var m = date.getMinutes();
+			var s = date.getSeconds();
+
+			iasHourInnerBar.style.width = h / 24 * 100 + "%";
+			iasMinuteInnerBar.style.width = m / 60 * 100 + "%";
+			iasSecondInnerBar.style.width = s / 60 * 100 + "%";
+		}
+	</script>
+</body>
+</html>

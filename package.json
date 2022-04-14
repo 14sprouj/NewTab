@@ -1,16 +1,18 @@
 {
-  "name": "newtab",
-  "github": "14sprouj/newtab",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "browser",
-	"extension"
-  ],
-  "author": "Joel Sprouse",
-  "license": "ISC",
-  "description": ""
+	"name": "newtab",
+	"github": "14sprouj/newtab",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"sass": "sass style.scss style.css",
+		"build": "npm run sass && webpack",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"browser",
+		"extension"
+	],
+	"author": "Joel Sprouse",
+	"license": "ISC",
+	"description": ""
 }

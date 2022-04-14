@@ -40,6 +40,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<meta http-equiv="refresh" content="720">
 	<script src="https://kit.fontawesome.com/e8abc56752.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -48,71 +49,44 @@
 			<img src="" id="weatherIcon">
 			<div id="temperature"></div>
 		</div>
-		<div class="dropdown-content">
+		<div id="weatherDetails" class="dropdown-content">
+			<div id="temperatures">
+				<i class="fa-solid fa-temperature-arrow-up"></i>
+				<div id="temperatureMax"></div>
+				<i class="fa-solid fa-temperature-arrow-down"></i>
+				<div id="temperatureMin"></div>
+			</div>
 			<div id="description"></div>
-			<div id="humidity"></div>
-			<div id="wind"></div>
+			<div id="wind">
+				<i class="fa-solid fa-wind"></i>
+				<div id="windSpeed"></div>
+				<div id="windDirection"></div>
+			</div>
 			<div id="sunTimes">
 				<div id="sunrise">
 					<i class="fa-solid fa-sunrise"></i>
 					<div class="time"></div>
 				</div>
 				<div id="sunset">
+					<i class="fa-solid fa-sunset"></i>
 					<div class="time"></div>
 				</div>
 			</div>
-			<button id="weatherSeeMore" class="hover-dropdown">See more</button>
+			<div id="weatherSeeMore" class="hover-dropdown">
+				<span id="btnWeatherSeeMore">See more</span>
+				<div id="weatherMore">
+					Humidity <div id="humidity"></div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<link rel="stylesheet" href="weather.css">
-	<style>
-		#weather {
-			position: absolute;
-			top: 0;
-			left: 0;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			z-index: 1;
-		}
-
-		#weatherOverview {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-			font-family: "Open Sans", sans-serif;
-		}
-
-		#weatherIcon {
-			height: 9vh;
-		}
-
-		#temperature {
-			font-size: 20px;
-		}
-
-		#weather div.dropdown-content {
-			display: flex;
-			flex-direction: column;			
-		}
-
-		#weather:hover div.dropdown-content {
-			display: flex;
-		}
-
-		#weather div.dropdown-content div {
-			    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-		}
-	</style>
+	
+	
 	<div id="time"></div>
-	<div id="greeting"></div>
 
-	<script>
+<script>
+	console.log(clockMode);
+	if (clockMode == "12h") {
 		function getTime() {
 			var d = new Date();
 			var h = d.getHours();
@@ -132,60 +106,85 @@
 			s = s < 10 ? '0' + s : s;
 			var time = h + ':' + m + ':' + s + ' ' + ampm;
 			document.getElementById('time').innerHTML = time;
-			//$('#time').html(time);
 		}
-		setInterval(getTime, 99);
+	} else if (clockMode == "24h") {
+		function getTime() {
+			var d = new Date();
+			var h = d.getHours();
+			var m = d.getMinutes();
+			var s = d.getSeconds();
+			if (h < 12) {
+				$("#greeting").html("Good Morning, " + name);
+			} else if (h < 18) {
+				$("#greeting").html("Good Afternoon, " + name);
+			} else {
+				$("#greeting").html("Good Evening, " + name);
+			}
+			h = h < 10 ? '0' + h : h;
+			m = m < 10 ? '0' + m : m;
+			s = s < 10 ? '0' + s : s;
+			var time = h + ':' + m + ':' + s;
+			document.getElementById('time').innerHTML = time;
+		}
+	} else if (clockMode == "ias") {
+		
+	} else if (clockMode == "bar") {
+		var outerBar = document.createElement("div");
+			outerBar.setAttribute("id", "outerTimeBar");
+		document.getElementById("time").appendChild(outerBar);
+					var bar = document.createElement("div");
+bar.setAttribute("id", "timeBar");
+		outerBar.appendChild(bar);
+		var timeBarPercentTxt = document.createElement("p");
+timeBarPercentTxt.setAttribute("id", "timeBarPercentTxt");
+		outerBar.appendChild(timeBarPercentTxt);
+
+		function getTime() {
+			var d = new Date();
+			var h = d.getHours();
+			var m = d.getMinutes();
+			var s = d.getSeconds();
+
+			var nowSecs = h * 3600 + m * 60 + s;
+			var nowTimePercent = nowSecs / 86400 * 100;
+			var bar = document.getElementById("timeBar");
+			bar.style.width = nowTimePercent + "%";
+
+			var timeBarPercentTxt = document.getElementById("timeBarPercentTxt");
+			timeBarPercentTxt.innerHTML = nowTimePercent.toFixed(5) + "%";
+		}
+	}
+	setInterval(getTime, 9);
+</script>
+
+
+	<div id="greeting"></div>
+
+	<script src="weather.js"></script>
+	<script>
+		
+		
 
 		// get lat and lon
 		console.log(lat, lon);
-		function getWeatherData() {
-			// Get Weather for lat long
-			$.ajax({
-				url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=c74d258583fbcda87446eb08a4bfb26b&units=metric",
-				dataType: "json",
-				success: function (weather) {
-					document.getElementById("weatherIcon").src = "https://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
-					document.getElementById("weatherIcon").alt = weather.weather[0].name;
-					console.log(weather);
-					console.log(weather.weather[0].description);
-					console.log(weather.weather[0].icon);
-					document.getElementById("temperature").innerHTML = weather.main.temp + "&deg;C";
-					$('#humidity').html(weather.main.humidity);
-					$('#wind').html(weather.wind.speed);
-					var sunrise = new Date(weather.sys.sunrise * 1000);
-					// pad with 0
-					var hr = sunrise.getHours();
-					var min = sunrise.getMinutes();
-					var sec = sunrise.getSeconds();
-					var ampm = hr >= 12 ? 'PM' : 'AM';
-					hr = hr % 12;
-					hr = hr ? hr : 12; // the hour '0' should be '12'
-					min = min < 10 ? '0' + min : min;
-					function pad(number, places) {
-						var string = number.toString();
-						while (string.length < places) {
-							string = "0" + string;
-						}
-						return string;
-						
-					}
-					$('#sunrise .time').html(sunrise.getHours() + ":" + pad(sunrise.getMinutes(),2));
-					var sunset = new Date(weather.sys.sunset * 1000);
-					$('#sunset .time').html(sunset.getHours() + ":" + pad(sunset.getMinutes(),2));
-					$('#description').html(weather.weather[0].description);
-				}
-			});
-		}
-		getWeatherData();
-		setInterval(getWeatherData, 1800000);
 
 		// when document is ready
-		$(document).ready(function () {
+		//$(document).ready(function () {
 			// get time
-			getTime();
+			try {
+				getTime();
+			} catch (error) {
+				console.log(error);				
+			}
+			
 			// get weather
-			getWeatherData();
+			try {
+				getWeatherData();
+			} catch (error) {
+				console.log(error);
+			}
 			// get timezone
+			/*
 			$.ajax({
 				url: "https://maps.googleapis.com/maps/api/timezone/json?location=" + lat + "," + lon + "&timestamp=" + Date.now() + "&key=" + apiKey,
 				dataType: "json",
@@ -197,35 +196,11 @@
 					console.log(timezone.dstOffset);
 				}
 			});
-		});
+			*/
+		//});
 					
 		
 	</script>
-	<style>
-		body {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-			height: 100vh;
-			width: 100vw;
-			background-color: #f5f5f5;
-			overflow: hidden;
-			margin: 0;
-		}
-
-		#time {
-			font-size: 50px;
-			font-family: 'Arial';
-			color: #000;
-		}
-
-		#greeting {
-			font-size: 30px;
-			font-family: 'Arial';
-			color: #000;
-		}
-	</style>
 </body>
 
 </html>
