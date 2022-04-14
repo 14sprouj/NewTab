@@ -1,0 +1,16 @@
+{
+  "name": "newtab",
+  "github": "14sprouj/newtab",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "browser",
+	"extension"
+  ],
+  "author": "Joel Sprouse",
+  "license": "ISC",
+  "description": ""
+}
