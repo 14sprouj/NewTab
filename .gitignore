@@ -1,5 +1,6 @@
 ._*
 node_modules/*
 .env
+config.js
 *.log
 *.*ss.map

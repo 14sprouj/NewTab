@@ -1,25 +1,38 @@
 function getWeatherData() {
+	var night = false;
 	// Get Weather for lat long
-	var weatherAPIurl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid="+openWeatherMapKey+"&units="+units+"&exclude=minutely,hourly";
 	$.ajax({
-		url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid="+openWeatherMapKey+"&units="+units+"&exclude=minutely,hourly",
+		url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherMapKey + "&units=" + weatherUnits + "&exclude=minutely,hourly",
 		//dataType: "json",
 		success: function (weatherData) {
-			console.log(weatherAPIurl);
-			document.getElementById("weatherIcon").src = "https://openweathermap.org/img/wn/" + weatherData.current.icon + ".png";
-			document.getElementById("weatherIcon").alt = weather.current[0].name;
-			console.log(weather);
-			console.log(weather.current[0].description);
-			console.log(weather.weather[0].icon);
-			//round to 1 decimal place
-			var temp = parseFloat(weather.main.temp);
-			var tempMin = parseFloat(weather.main.temp_min);
-			var tempMax = parseFloat(weather.main.temp_max);
-			$('#temperature').html(temp.toFixed(1) + "&deg;C");
-			$('#temperatureMin').html(tempMin.toFixed(1) + "&deg;C");
-			$('#temperatureMax').html(tempMax.toFixed(1) + "&deg;C");
-			$('#humidity').html(weather.main.humidity + "%");
-			$('#windSpeed').html(weather.wind.speed) + " m/s";
+			//console.log(weatherAPIurl);
+			document.getElementById("weatherIcon").src = "https://openweathermap.org/img/wn/" + weatherData.current.weather[0].icon + ".png";
+			if (weatherData.current.weather[0].icon.charAt(weatherData.current.weather[0].icon.length - 1) == "n") {
+				night = true;
+				document.getElementById("weatherOverview").style.backgroundColor = "#0006";
+				document.getElementsByTagName("body")[0].style.backdropFilter = "brightness(0.8) saturate(0.6)";
+			}
+			document.getElementById("weatherIcon").alt = weatherData.current.name;
+			//console.log(weatherData);
+			//console.log(weatherData.current.description);
+			//console.log(weatherData.current.weather[0].icon);
+			var temp = parseFloat(weatherData.current.temp);
+			var tempMin = parseFloat(weatherData.daily[0].temp.min);
+			var tempMax = parseFloat(weatherData.daily[0].temp.max);
+
+			$('#humidity').html(weatherData.current.humidity + "%");
+
+			if (weatherUnits == "metric") {
+				$('#temperature').html(temp.toFixed(1) + "&deg;C");
+				$('#temperatureMin').html(tempMin.toFixed(1) + "&deg;C");
+				$('#temperatureMax').html(tempMax.toFixed(1) + "&deg;C");
+				$('#windSpeed').html(weatherData.current.wind_speed + " m/s");
+			} else if (weatherUnits == "imperial") {
+				$('#temperature').html(temp.toFixed(1) + "&deg;F");
+				$('#temperatureMin').html(tempMin.toFixed(1) + "&deg;F");
+				$('#temperatureMax').html(tempMax.toFixed(1) + "&deg;F");
+				$('#windSpeed').html(weatherData.current.wind_speed + " mph");
+			}
 
 			var now = new Date();
 			var nowHr = now.getHours();
@@ -27,7 +40,7 @@ function getWeatherData() {
 
 			var sunrisePassed, sunsetPassed = false;
 
-			var sunrise = new Date(weather.sys.sunrise * 1000);
+			var sunrise = new Date(weatherData.current.sunrise * 1000);
 			var hr = sunrise.getHours();
 			var min = sunrise.getMinutes();
 			if (hr < nowHr) {
@@ -49,8 +62,9 @@ function getWeatherData() {
 				}
 				return string;
 			}
-			$('#sunrise .time').html(sunrise.getHours() + ":" + pad(sunrise.getMinutes(),2));
-			var sunset = new Date(weather.sys.sunset * 1000);
+			$('#sunrise .time').html(sunrise.getHours() + ":" + pad(sunrise.getMinutes(), 2));
+
+			var sunset = new Date(weatherData.current.sunset * 1000);
 			var hr = sunset.getHours();
 			var min = sunset.getMinutes();
 			if (hr < nowHr) {
@@ -60,14 +74,14 @@ function getWeatherData() {
 					sunsetPassed = true;
 				}
 			}
-			$('#sunset .time').html(sunset.getHours() + ":" + pad(sunset.getMinutes(),2));
+			$('#sunset .time').html(sunset.getHours() + ":" + pad(sunset.getMinutes(), 2));
 			if (sunrisePassed) {
 				$('#sunrise').addClass('passed');
 			}
 			if (sunsetPassed) {
 				$('#sunset').addClass('passed');
 			}
-			$('#description').html(weather.weather[0].description);
+			$('#description').html(weatherData.current.weather[0].description);
 		}
 	});
 }
