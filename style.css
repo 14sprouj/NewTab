@@ -1,124 +1,170 @@
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-  background-color: #f5f5f5;
-  overflow: hidden;
-  margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100vh;
+	width: 100vw;
+	background-color: #f5f5f5;
+	overflow: hidden;
+	margin: 0;
+	background-size: cover;
 }
 
 #time {
-  font-size: 50px;
-  font-family: "Arial";
-  color: #000;
+	font-size: 50px;
+	font-family: "Arial";
+	color: #000;
+	user-select: none;
 }
+
 #time #outerTimeBar {
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 80vw;
-  height: 10vh;
-  border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 80vw;
+	height: 10vh;
+	border-radius: 10px;
 }
+
 #time #outerTimeBar #timeBar {
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
 }
-#time #outerTimeBar p {
-  font-size: 30px;
-  font-family: "Arial";
-  color: #fff;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  top: calc(50vh - 15px);
-  position: absolute;
-  width: 100%;
+
+#time #iasClock .iasOuterBar {
+	height: 8vh;
+	border-radius: 10px;
 }
-#time #iasHourOuterBar {
-  background-color: rgba(0, 0, 0, 0.1);
-  width: 80vw;
-  height: 10vh;
-  border-radius: 10px;
+
+#time #iasClock .iasOuterBar .iasBarText {
+	font-size: 30px;
+	font-family: "Arial";
+	color: #fff;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	width: 100%;
 }
-#time #iasHourOuterBar #iasHourInnerBar {
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
+
+#time #iasClock .iasOuterBar#iasHourOuterBar {
+	background-color: rgba(0, 0, 0, 0.1);
 }
-#time #iasHourOuterBar p {
-  font-size: 30px;
-  font-family: "Arial";
-  color: #fff;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  top: calc(50vh - 15px);
-  position: absolute;
-  width: 100%;
+
+#time #iasClock .iasOuterBar#iasHourOuterBar #iasHourInnerBar {
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+}
+
+#time #iasClock .iasOuterBar#iasMinuteOuterBar {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+#time #iasClock .iasOuterBar#iasMinuteOuterBar #iasMinuteInnerBar {
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+}
+
+#time #iasClock .iasOuterBar#iasSecondOuterBar {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+#time #iasClock .iasOuterBar#iasSecondOuterBar #iasSecondInnerBar {
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
 }
 
 #greeting {
-  font-size: 30px;
-  font-family: "Arial";
-  color: #000;
+	font-size: 30px;
+	font-family: "Arial";
+	color: #000;
+	user-select: none;
 }
 
+#quote {
+	max-width: 80vw;
+	font-size: 1.2em;
+	position: absolute;
+	top: calc(60%);
+	text-shadow: 0 0 7px white;
+	}
+
 #weather {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  width: 200px;
-  max-width: 30vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+	width: 200px;
+	max-width: 30vw;
 }
+
 #weather #weatherOverview {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-family: "Open Sans", sans-serif;
+	width: 100%;
 }
+
 #weather #weatherOverview #weatherIcon {
-  height: 9vh;
+	height: 9vh;
+	filter: drop-shadow(0 0 0.5vh rgba(0, 0, 0, 0.5));
 }
+
 #weather #weatherOverview #temperature {
-  font-size: 20px;
+	font-size: 20px;
 }
+
 #weather #weatherDetails {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-family: "Open Sans", sans-serif;
+	width: 80%;
+	padding: 10%;
 }
+
 #weather #weatherDetails #weatherDescription {
-  font-size: 20px;
+	font-size: 20px;
 }
+
 #weather #weatherDetails #weatherLocation {
-  font-size: 20px;
+	font-size: 20px;
 }
-#weather #weatherDetails div {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
+
+#weather #weatherDetails div.row {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	width: 100%;
 }
+
+div#weatherSeeMore {
+	display: inline !important;
+}
+
 #weather #btnWeatherSeeMore {
-  background-color: #44f;
+	background-color: #44f;
 }
+
 #weather #weatherMore {
-  display: none !important;
+	display: none !important;
 }
+
 #weather #weatherSeeMore:hover #weatherMore {
-  display: flex !important;
+	display: flex !important;
 }
+
 
 /*# sourceMappingURL=style.css.map */

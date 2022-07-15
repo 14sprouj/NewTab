@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="config.js"></script>
+	<meta http-equiv="refresh" content="720">
+	<script src="https://kit.fontawesome.com/e8abc56752.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div id="greeting">
+		<span id="timezone"></span>
+		<span id="name"></span>
+	</div>
+	<div id="weather" class="hover-dropdown">
+		<div id="weatherOverview">
+			<img src="" id="weatherIcon">
+			<div id="temperature"></div>
+		</div>
+		<div id="weatherDetails" class="dropdown-content">
+			<div id="temperatures" class="row">
+				<i class="fa-solid fa-temperature-arrow-up"></i>
+				<div id="temperatureMax"></div>
+				<i class="fa-solid fa-temperature-arrow-down"></i>
+				<div id="temperatureMin"></div>
+			</div>
+			<div id="description" class="row"></div>
+			<div id="wind" class="row">
+				<i class="fa-solid fa-wind"></i>
+				<div id="windSpeed"></div>
+				<div id="windDirection"></div>
+			</div>
+			<div id="sunTimes" class="row">
+				<div id="sunrise">
+					<i class="fa-solid fa-sunrise"></i>
+					<div class="time"></div>
+				</div>
+				<div id="sunset">
+					<i class="fa-solid fa-sunset"></i>
+					<div class="time"></div>
+				</div>
+			</div>
+			<div id="weatherSeeMore" class="hover-dropdown">
+				<span id="btnWeatherSeeMore">See more</span>
+				<div id="weatherMore">
+					Humidity <div id="humidity"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="time"></div>
+
+	<div id="quote"></div>
+
+	<script src="time.js"></script>
+	<script src="img.js"></script>
+	<script src="weather.js"></script>
+	<script src="quote.js"></script>
+	<script>
+		// when document is ready
+		//$(document).ready(function () {
+		// get time
+		try {
+			getTime();
+		} catch (error) {
+			console.log(error);
+		}
+
+		// get weather
+		try {
+			getWeatherData();
+		} catch (error) {
+			console.log(error);
+		}
+	</script>
+	<script>
+		document.getElementById("name").innerHTML = userName;
+	</script>
+</body>
+
+</html>
